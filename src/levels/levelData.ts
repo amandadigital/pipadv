@@ -570,14 +570,14 @@ const ch6: LevelData[] = [
     hint: "Time your jumps with the swift platform rhythm. Pure timing required.",
     pencilDisabled: true
   }),
-  createLevel(57, "The Elevator Shaft", 6, CHAPTER_NAMES[5], "deep ascent", [70, 400], [120, 120], 0, 0, [
+createLevel(57, "The Elevator Shaft", 6, CHAPTER_NAMES[5], "deep ascent", [70, 400], [120, 120], 60, 0, [
     [40, 440, 200, 20],
-    [40, 160, 180, 20],
+    [0, 160, 260, 20],    // ← x=0, ширина 260: левый край на 0, правый на 260 (вплотную к колонне)
     [260, 80, 20, 360]
   ], {
     movingPlatforms: [{ id: "m7", x: 360, y: 400, w: 90, h: 15, dx: 0, dy: -260, speed: 1.6 }],
     hint: "Walk right into the shaft, ride the lift to the top, and leap back left to the high door.",
-    pencilDisabled: true
+
   }),
   createLevel(58, "Drifting Islands", 6, CHAPTER_NAMES[5], "cross currents", [70, 300], [720, 300], 0, 0, [
     [40, 340, 120, 20],
@@ -616,6 +616,9 @@ const ch6: LevelData[] = [
 
 /* =========================================================================
    CHAPTER 7: TWO SIDES (Levels 61 - 70) - НОВЫЙ БАЛАНС
+   ========================================================================= */
+/* =========================================================================
+   CHAPTER 7: TWO SIDES (Levels 61 - 70)
    ========================================================================= */
 const ch7: LevelData[] = [
   createLevel(61, "The Brass Key", 7, CHAPTER_NAMES[6], "fetch the key", [70, 400], [720, 400], 0, 0, [
@@ -688,7 +691,7 @@ const ch7: LevelData[] = [
     ],
     hint: "You have enough ink for two thin bridges: one to the island, one to the door."
   }),
-  createLevel(68, "Over the Wall", 7, CHAPTER_NAMES[6], "circuitous run", [70, 400], [720, 180], 45, 2, [
+  createLevel(68, "Over the Wall", 7, CHAPTER_NAMES[6], "circuitous run", [70, 400], [720, 180], 60, 2, [
     [40, 440, 240, 20],
     [400, 200, 30, 140],
     [620, 240, 140, 20]
@@ -709,7 +712,7 @@ const ch7: LevelData[] = [
     hint: "Jump onto the moving platform to catch the key and ride it to the exit door.",
     pencilDisabled: true
   }),
-  createLevel(70, "Threshold of the Two", 7, CHAPTER_NAMES[6], "grand lock", [70, 400], [720, 160], 55, 2, [
+  createLevel(70, "Threshold of the Two", 7, CHAPTER_NAMES[6], "grand lock", [70, 400], [720, 160], 70, 2, [
     [40, 440, 160, 20],
     [320, 300, 120, 20],
     [640, 220, 120, 20]
@@ -718,21 +721,22 @@ const ch7: LevelData[] = [
     keys: [{ id: "k10", x: 380, y: 250 }],
     doors: [{ id: "d10", x: 620, y: 40, w: 20, h: 180, keyId: "k10" }],
     spikes: [[180, 445, 440, 15]],
-    hint: "Cross the void with a single bridge, grab the key, erase the wall, and jump to the door."
+    hint: "Cross the void with a single bridge, grab the key, erase the wall, and jump to the door.",
+    targetInk: 40,
+    targetTime: 30
   })
 ];
 
 /* =========================================================================
-   CHAPTER 8: THE RULES CHANGE (Levels 71 - 80) - НОВЫЙ БАЛАНС
+   CHAPTER 8: THE RULES CHANGE (Levels 71 - 80)
    ========================================================================= */
 const ch8: LevelData[] = [
-  createLevel(71, "The Coiled Wire", 8, CHAPTER_NAMES[7], "spiral springboard", [70, 400], [700, 140], 0, 0, [
+  createLevel(71, "The Coiled Wire", 8, CHAPTER_NAMES[7], "spiral springboard", [70, 400], [700, 140], 50, 0, [
     [40, 440, 720, 20],
     [620, 180, 140, 20]
   ], {
     springs: [[360, 430, 40, 10, 1.4]],
     hint: "Jump onto the spring to launch high onto the ledge. Pure spring physics.",
-    pencilDisabled: true
   }),
   createLevel(72, "Double Bounce", 8, CHAPTER_NAMES[7], "chain reaction", [70, 400], [720, 120], 0, 0, [
     [40, 440, 180, 20],
@@ -746,7 +750,7 @@ const ch8: LevelData[] = [
     hint: "Chain both springs together with momentum. No drawing allowed.",
     pencilDisabled: true
   }),
-  createLevel(73, "Wind from the Pages", 8, CHAPTER_NAMES[7], "updraft chimney", [70, 400], [720, 120], 0, 0, [
+  createLevel(73, "Wind from the Pages", 8, CHAPTER_NAMES[7], "updraft chimney", [70, 400], [720, 120], 15, 0, [
     [40, 440, 220, 20],
     [620, 180, 140, 20]
   ], {
@@ -764,14 +768,13 @@ const ch8: LevelData[] = [
     hint: "Jump into the wind stream. The updraft will carry you safely across the void.",
     pencilDisabled: true
   }),
-  createLevel(75, "Spring & Eraser", 8, CHAPTER_NAMES[7], "clear the flight path", [70, 400], [720, 140], 0, 2, [
+  createLevel(75, "Spring & Eraser", 8, CHAPTER_NAMES[7], "clear the flight path", [70, 400], [720, 140], 10, 2, [
     [40, 440, 720, 20],
     [620, 180, 140, 20]
   ], {
     springs: [[260, 430, 40, 10, 1.5]],
     erasables: [{ id: "e_c8_ceil", x: 240, y: 220, w: 120, h: 20 }],
     hint: "Erase the ceiling above the spring, then bounce straight up to the door.",
-    pencilDisabled: true
   }),
   createLevel(76, "Headwind Challenge", 8, CHAPTER_NAMES[7], "against the draft", [70, 400], [720, 400], 40, 0, [
     [40, 440, 720, 20]
@@ -779,7 +782,7 @@ const ch8: LevelData[] = [
     winds: [[300, 240, 260, 200, -0.4, 0]],
     hint: "The wind pushes left. Draw one tiny diagonal stroke to slip under it."
   }),
-  createLevel(77, "The Skyward Catapult", 8, CHAPTER_NAMES[7], "massive launch", [70, 400], [720, 80], 0, 0, [
+  createLevel(77, "The Skyward Catapult", 8, CHAPTER_NAMES[7], "massive launch", [70, 400], [720, 80], 10, 0, [
     [40, 440, 180, 20],
     [640, 120, 120, 20]
   ], {
@@ -825,7 +828,7 @@ const ch8: LevelData[] = [
 ];
 
 /* =========================================================================
-   CHAPTER 9: ALMOST IMPOSSIBLE (Levels 81 - 90) - НОВЫЙ БАЛАНС
+   CHAPTER 9: ALMOST IMPOSSIBLE (Levels 81 - 90)
    ========================================================================= */
 const ch9: LevelData[] = [
   createLevel(81, "The Labyrinth Gate", 9, CHAPTER_NAMES[8], "three-step sequence", [70, 400], [720, 400], 0, 3, [
@@ -875,7 +878,7 @@ const ch9: LevelData[] = [
     erasables: [{ id: "e_c9_4", x: 300, y: 300, w: 60, h: 20 }],
     hint: "Erase the blocker, grab the key, and draw a short line to the door."
   }),
-  createLevel(85, "Crossfire of Wind", 9, CHAPTER_NAMES[8], "opposing currents", [70, 400], [720, 160], 0, 0, [
+  createLevel(85, "Crossfire of Wind", 9, CHAPTER_NAMES[8], "opposing currents", [70, 400], [720, 160], 15, 0, [
     [40, 440, 140, 20],
     [640, 200, 120, 20]
   ], {
@@ -884,18 +887,19 @@ const ch9: LevelData[] = [
       [420, 160, 200, 200, 0.4, 0]
     ],
     spikes: [[160, 455, 460, 15]],
-    hint: "Navigate the intersecting air currents to reach the exit ledge without any drawing.",
-    pencilDisabled: true
+    hint: "FRAME-PERFECT: jump into the left updraft on the frame it peaks, then transfer to the right stream. If you miss, you fall safe to the left platform.",
+    targetTime: 25
   }),
-  createLevel(86, "The Razor Edge", 9, CHAPTER_NAMES[8], "tight corridor", [70, 400], [720, 400], 35, 4, [
+  createLevel(86, "The Razor Edge", 9, CHAPTER_NAMES[8], "tight corridor", [70, 400], [720, 400], 30, 4, [
     [40, 440, 720, 20],
     [200, 120, 380, 180]
   ], {
     erasables: [{ id: "e_raz", x: 320, y: 340, w: 40, h: 100 }],
     spikes: [[400, 425, 120, 15]],
-    hint: "Erase the block, then draw the most efficient straight bridge over the spikes."
+    hint: "FRAME-PERFECT: erase the block and cross in one continuous dash; if you stop, the wind pushes you back.",
+    pencilDisabled: true
   }),
-  createLevel(87, "Double Vault Key", 9, CHAPTER_NAMES[8], "precision bounce", [70, 400], [720, 180], 0, 0, [
+  createLevel(87, "Double Vault Key", 9, CHAPTER_NAMES[8], "precision bounce", [70, 400], [720, 180], 20, 0, [
     [40, 440, 140, 20],
     [640, 220, 120, 20]
   ], {
@@ -904,7 +908,6 @@ const ch9: LevelData[] = [
     doors: [{ id: "d_c9_7", x: 620, y: 40, w: 20, h: 180, keyId: "k_c9_7" }],
     spikes: [[160, 465, 460, 15]],
     hint: "Use the high bounce spring to launch through the key directly to the goal platform.",
-    pencilDisabled: true
   }),
   createLevel(88, "The Clockwork Gear", 9, CHAPTER_NAMES[8], "orbital platforms", [70, 400], [720, 400], 0, 0, [
     [40, 440, 120, 20],
@@ -916,7 +919,7 @@ const ch9: LevelData[] = [
       { id: "m_c9_8c", x: 500, y: 240, w: 70, h: 15, dx: 0, dy: 140, speed: 1.5 }
     ],
     spikes: [[140, 465, 490, 15]],
-    hint: "Time the moving platforms across the void. Pure platforming skill.",
+    hint: "FRAME-PERFECT: chain all three lifts without touching the ground. Each transfer has a 4-frame window.",
     pencilDisabled: true
   }),
   createLevel(89, "The False Sanctuary", 9, CHAPTER_NAMES[8], "look closely", [70, 400], [720, 160], 40, 5, [
@@ -948,7 +951,7 @@ const ch9: LevelData[] = [
 ];
 
 /* =========================================================================
-   CHAPTER 10: THE LAST PAGE (Levels 91 - 100) - НОВЫЙ БАЛАНС
+   CHAPTER 10: THE LAST PAGE (Levels 91 - 100)
    ========================================================================= */
 const ch10: LevelData[] = [
   createLevel(91, "The Margin Line", 10, CHAPTER_NAMES[9], "edge of the ruled sheet", [70, 400], [720, 400], 0, 0, [
@@ -1004,21 +1007,23 @@ const ch10: LevelData[] = [
     hint: "No pencil allowed and exactly 2 eraser strokes. Erase only the passing window.",
     pencilDisabled: true
   }),
-  createLevel(96, "The Kinetic Sketch", 10, CHAPTER_NAMES[9], "all moving parts", [70, 400], [720, 160], 0, 1, [
+  createLevel(96, "The Kinetic Sketch", 10, CHAPTER_NAMES[9], "all moving parts", [70, 400], [720, 140], 0, 1, [
     [40, 440, 120, 20],
     [400, 330, 80, 20],
-    [640, 200, 120, 20]
+    [640, 180, 120, 20]
   ], {
     movingPlatforms: [
       { id: "m_c10_6", x: 200, y: 400, w: 75, h: 15, dx: 140, dy: -120, speed: 2.2 }
     ],
     springs: [[420, 320, 40, 10, 1.5]],
-    erasables: [{ id: "e_c10_6", x: 540, y: 160, w: 20, h: 120 }],
+    erasables: [{ id: "e_c10_6", x: 540, y: 140, w: 20, h: 120 }],
     spikes: [[140, 465, 480, 15]],
-    hint: "High-speed moving lift, spring launch, and eraser timing. Pure kinetic mastery.",
-    pencilDisabled: true
+    hint: "BOSS 1/5 — FRAME-PERFECT: ride the lift to its peak, jump on the frame it reverses, spring off, erase the bar mid-flight. Miss = safe reset on the mid platform.",
+    pencilDisabled: true,
+    targetTime: 20,
+    checkpoints: [[400, 300]]
   }),
-  createLevel(97, "The Dual Keylock", 10, CHAPTER_NAMES[9], "harmony of two keys", [70, 400], [720, 400], 35, 0, [
+  createLevel(97, "The Dual Keylock", 10, CHAPTER_NAMES[9], "harmony of two keys", [70, 400], [720, 400], 30, 0, [
     [40, 440, 720, 20],
     [240, 260, 80, 20],
     [480, 260, 80, 20]
@@ -1031,7 +1036,8 @@ const ch10: LevelData[] = [
       { id: "d_c10_7a", x: 620, y: 40, w: 20, h: 400, keyId: "k_c10_7a" },
       { id: "d_c10_7b", x: 670, y: 40, w: 20, h: 400, keyId: "k_c10_7b" }
     ],
-    hint: "Two high keys on limited ledges. Micro-budget ink: draw only tiny ramps."
+    hint: "BOSS 2/5 — FRAME-PERFECT: collect both keys in a single airborne chain (2-frame window between them), then land on the door frame. Ink is only for the final ramp.",
+    targetTime: 22
   }),
   createLevel(98, "The Draft Cathedral", 10, CHAPTER_NAMES[9], "soaring drafts", [70, 400], [720, 100], 0, 0, [
     [40, 440, 140, 20],
@@ -1043,10 +1049,12 @@ const ch10: LevelData[] = [
       [490, 100, 110, 340, 0, -0.6]
     ],
     spikes: [[140, 465, 490, 15]],
-    hint: "Ride the vertical updrafts without any pencil or eraser. Pure aerial mastery.",
-    pencilDisabled: true
+    hint: "BOSS 3/5 — FRAME-PERFECT: transfer across three updrafts on their exact peaks. Falling drops you back to the start ledge, not into spikes.",
+    pencilDisabled: true,
+    targetTime: 18,
+    checkpoints: [[360, 100]]
   }),
-  createLevel(99, "Before the End", 10, CHAPTER_NAMES[9], "every mark remembered", [70, 400], [720, 140], 35, 2, [
+  createLevel(99, "Before the End", 10, CHAPTER_NAMES[9], "every mark remembered", [70, 400], [720, 140], 30, 2, [
     [40, 440, 120, 20],
     [320, 340, 100, 20],
     [540, 260, 80, 20],
@@ -1059,20 +1067,23 @@ const ch10: LevelData[] = [
     keys: [{ id: "k_c10_9", x: 370, y: 300 }],
     doors: [{ id: "d_c10_9", x: 640, y: 40, w: 20, h: 140, keyId: "k_c10_9" }],
     spikes: [[140, 465, 500, 15]],
-    hint: "Erase the barriers, capture the key mid-air, and budget every drop of graphite."
+    hint: "BOSS 4/5 — FRAME-PERFECT: erase both barriers on the same jump arc, grab the key at the apex, and land on the door ledge. Two eraser strokes, zero margin.",
+    targetTime: 20
   }),
-  createLevel(100, "The Artist's Signature", 10, CHAPTER_NAMES[9], "escape the page", [70, 400], [720, 100], 40, 2, [
+  createLevel(100, "The Artist's Signature", 10, CHAPTER_NAMES[9], "escape the page", [70, 400], [720, 80], 35, 2, [
     [40, 440, 140, 20],
     [240, 360, 80, 20],
     [440, 280, 80, 20],
-    [660, 140, 100, 20]
+    [660, 120, 100, 20]
   ], {
-    erasables: [{ id: "e_c10_100", x: 380, y: 140, w: 20, h: 180, label: "signature" }],
+    erasables: [{ id: "e_c10_100", x: 380, y: 120, w: 20, h: 180, label: "signature" }],
     springs: [[260, 350, 40, 10, 1.45]],
     keys: [{ id: "k_100", x: 480, y: 240 }],
-    doors: [{ id: "d_100", x: 640, y: 20, w: 20, h: 120, keyId: "k_100" }],
+    doors: [{ id: "d_100", x: 640, y: 20, w: 20, h: 100, keyId: "k_100" }],
     spikes: [[140, 465, 510, 15]],
-    hint: "The supreme trial. Spring jump, erase signature, grab key, and bridge to freedom."
+    hint: "BOSS 5/5 — FINAL FRAME-PERFECT: spring launch on the exact peak frame, erase the signature mid-air, catch the key at the apex, and land on the exit ledge. Every input is a 2-frame window. Good luck.",
+    targetTime: 18,
+    checkpoints: [[240, 330], [440, 250]]
   })
 ];
 
