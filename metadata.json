@@ -1,0 +1,6 @@
+{
+  "name": "Paper Escape",
+  "description": "A minimalist puzzle-platformer set inside a living sketchbook. Draw platforms with graphite ink, erase barriers, and solve 100 handcrafted levels plus infinite procedural sketches.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
