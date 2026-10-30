@@ -527,13 +527,12 @@ const ch6: LevelData[] = [
     hint: "Hop onto the oscillating platform and let it carry you across the spike sea. No drawing allowed.",
     pencilDisabled: true
   }),
-  createLevel(52, "Vertical Lift", 6, CHAPTER_NAMES[5], "going up", [70, 400], [700, 140], 0, 0, [
+  createLevel(52, "Vertical Lift", 6, CHAPTER_NAMES[5], "going up", [70, 400], [700, 140], 100, 0, [
     [40, 440, 160, 20],
     [640, 180, 120, 20]
   ], {
     movingPlatforms: [{ id: "m2", x: 340, y: 380, w: 100, h: 15, dx: 0, dy: -200, speed: 1.4 }],
     hint: "Step on the rising platform, then jump off at its peak toward the exit door.",
-    pencilDisabled: true
   }),
   createLevel(53, "Two Shifts", 6, CHAPTER_NAMES[5], "transfer trains", [70, 400], [720, 400], 0, 0, [
     [40, 440, 120, 20],
