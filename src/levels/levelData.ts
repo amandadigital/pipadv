@@ -71,39 +71,38 @@ export const CHAPTER_NAMES = [
    CHAPTER 1: FIRST MARKS (Levels 1 - 10)
    ========================================================================= */
 const ch1: LevelData[] = [
-  createLevel(1, "The First Step", 1, CHAPTER_NAMES[0], "walk to the exit", [80, 400], [700, 400], 0, 0, [
+  createLevel(1, "The First Step", 1, CHAPTER_NAMES[0], "walk to the exit", [80, 400], [700, 400], 1000, 0, [
     [40, 440, 720, 20]
   ], {
     hint: "Use A/D or Arrow keys to walk right toward the door.",
-    pencilDisabled: true
   }),
-  createLevel(2, "Small Leap", 1, CHAPTER_NAMES[0], "space to jump", [80, 400], [700, 400], 0, 0, [
+  createLevel(2, "Small Leap", 1, CHAPTER_NAMES[0], "space to jump", [80, 400], [700, 400], 1000, 0, [
     [40, 440, 280, 20],
     [440, 440, 320, 20]
   ], {
     hint: "Jump across the gap with Space or W.",
     pencilDisabled: true
   }),
-  createLevel(3, "The Pencil", 1, CHAPTER_NAMES[0], "draw a bridge", [80, 400], [720, 400], 220, 0, [
+  createLevel(3, "The Pencil", 1, CHAPTER_NAMES[0], "draw a bridge", [80, 400], [720, 400], 800, 0, [
     [40, 440, 200, 20],
     [560, 440, 200, 20]
   ], {
     hint: "Click and drag with your mouse (or finger) to draw a graphite line across the chasm."
   }),
-  createLevel(4, "Ascension", 1, CHAPTER_NAMES[0], "climb higher", [80, 400], [700, 180], 180, 0, [
+  createLevel(4, "Ascension", 1, CHAPTER_NAMES[0], "climb higher", [80, 400], [700, 180], 500, 0, [
     [40, 440, 220, 20],
     [640, 220, 120, 20]
   ], {
     hint: "Draw a rising diagonal line or a couple of steps to climb up."
   }),
-  createLevel(5, "Over the Ridge", 1, CHAPTER_NAMES[0], "scale the wall", [80, 400], [700, 400], 160, 0, [
+  createLevel(5, "Over the Ridge", 1, CHAPTER_NAMES[0], "scale the wall", [80, 400], [700, 400], 250, 0, [
     [40, 440, 240, 20],
     [360, 260, 60, 180],
     [500, 440, 260, 20]
   ], {
     hint: "Draw a curved ramp over the tall pencil pillar."
   }),
-  createLevel(6, "The Stepping Stones", 1, CHAPTER_NAMES[0], "connect the dots", [70, 400], [720, 300], 0, 0, [
+  createLevel(6, "The Stepping Stones", 1, CHAPTER_NAMES[0], "connect the dots", [70, 400], [720, 300], 400, 0, [
     [40, 440, 140, 20],
     [260, 380, 80, 20],
     [460, 340, 80, 20],
@@ -112,7 +111,7 @@ const ch1: LevelData[] = [
     hint: "Pure platforming: leap from ledge to ledge across the chasm.",
     pencilDisabled: true
   }),
-  createLevel(7, "First Needles", 1, CHAPTER_NAMES[0], "sharp graphite", [70, 400], [720, 400], 160, 0, [
+  createLevel(7, "First Needles", 1, CHAPTER_NAMES[0], "sharp graphite", [70, 400], [720, 400], 200, 0, [
     [40, 440, 180, 20],
     [220, 430, 340, 15],
     [560, 440, 200, 20]
@@ -120,7 +119,7 @@ const ch1: LevelData[] = [
     spikes: [[230, 415, 320, 15]],
     hint: "Do not touch the graphite spikes. Draw an elevated bridge safe above them."
   }),
-  createLevel(8, "The High Shelf", 1, CHAPTER_NAMES[0], "two-tier sketch", [70, 400], [140, 160], 140, 0, [
+  createLevel(8, "The High Shelf", 1, CHAPTER_NAMES[0], "two-tier sketch", [70, 400], [140, 160], 150, 0, [
     [40, 440, 340, 20],
     [400, 320, 180, 20],
     [600, 240, 140, 20],
