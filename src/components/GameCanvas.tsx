@@ -86,6 +86,7 @@ export const GameCanvas: React.FC<GameCanvasProps> = ({
     jump: false,
     jumpPressed: false
   });
+  const prevTouchJump = useRef<boolean>(false);
 
   const startTime = useRef<number>(performance.now());
   const initialInk = useRef<number>(inkRemaining);
@@ -395,7 +396,9 @@ export const GameCanvas: React.FC<GameCanvasProps> = ({
         const inputLeft = keysDown.current.left || touchInput.left;
         const inputRight = keysDown.current.right || touchInput.right;
         const inputJump = keysDown.current.jump || touchInput.jump;
-        const inputJumpPressed = keysDown.current.jumpPressed;
+        const touchJumpTriggered = touchInput.jump && !prevTouchJump.current;
+        prevTouchJump.current = touchInput.jump;
+        const inputJumpPressed = keysDown.current.jumpPressed || touchJumpTriggered;
         keysDown.current.jumpPressed = false;
 
         // Checkpoint update: if player is safely resting on a solid platform
@@ -535,7 +538,8 @@ export const GameCanvas: React.FC<GameCanvasProps> = ({
             levelId: level.id,
             reducedMotion: progress.reducedMotion,
             mousePos: mousePos.current,
-            checkpoint: currentCheckpoint.current
+            checkpoint: currentCheckpoint.current,
+            customization: progress.customization
           });
           ctx.restore();
         }
@@ -556,6 +560,7 @@ export const GameCanvas: React.FC<GameCanvasProps> = ({
     inkRemaining,
     particles,
     progress.reducedMotion,
+    progress.customization,
     onLevelComplete,
     touchInput
   ]);

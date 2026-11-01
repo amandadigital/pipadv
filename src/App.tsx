@@ -11,6 +11,7 @@ import { InstructionsModal } from './components/InstructionsModal';
 import { StoryModal } from './components/StoryModal';
 import { LevelCompleteModal } from './components/LevelCompleteModal';
 import { TouchControls } from './components/TouchControls';
+import { PWAInstallButton } from './components/PWAInstallButton';
 import { sound } from './audio/soundtrack';
 import { Play, Grid, Settings as SettingsIcon, Feather, ExternalLink, Sparkles, BookOpen } from 'lucide-react';
 
@@ -26,7 +27,14 @@ const DEFAULT_PROGRESS: UserProgress = {
   generousInk: false,
   reducedMotion: false,
   characterName: 'Pip',
-  hasSeenPrologue: false
+  hasSeenPrologue: false,
+  customization: {
+    scarfColor: 'crimson',
+    scarfStyle: 'flutter',
+    hat: 'none',
+    inkTone: 'graphite',
+    expression: 'classic'
+  }
 };
 
 export default function App() {
@@ -328,6 +336,8 @@ export default function App() {
               <SettingsIcon className="w-4 h-4 text-[#615a4e]" />
               <span>Settings</span>
             </button>
+
+            <PWAInstallButton className="py-2.5 px-4" />
           </div>
 
           <div className="font-handwriting text-lg text-[#857d70] pt-1">

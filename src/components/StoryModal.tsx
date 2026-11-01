@@ -58,8 +58,11 @@ export const StoryModal: React.FC<StoryModalProps> = ({
                   <circle cx="110" cy="80" r="7" fill="#faf7f0" stroke="#2b2926" strokeWidth="2" />
                   <circle cx="112" cy="79" r="1.2" fill="#2b2926" />
                   <line x1="110" y1="87" x2="110" y2="105" stroke="#2b2926" strokeWidth="2" strokeLinecap="round" />
-                  {/* Scarf */}
-                  <path d="M 107 90 Q 98 94 92 90" stroke="#524a42" strokeWidth="1.8" fill="none" />
+                  {/* Scarf: Collar around neck & trailing tails */}
+                  <ellipse cx="110" cy="88" rx="5.5" ry="2.2" fill="#c93434" stroke="#8b1e1e" strokeWidth="1.2" />
+                  <circle cx="108" cy="88.5" r="2" fill="#c93434" stroke="#8b1e1e" strokeWidth="1.2" />
+                  <path d="M 108 88.5 Q 100 87 93 91" stroke="#c93434" strokeWidth="2.5" fill="none" strokeLinecap="round" />
+                  <path d="M 108 89.5 Q 102 93 96 95" stroke="#c93434" strokeWidth="2" fill="none" strokeLinecap="round" />
                   {/* Legs */}
                   <line x1="110" y1="105" x2="104" y2="120" stroke="#2b2926" strokeWidth="2" strokeLinecap="round" />
                   <line x1="110" y1="105" x2="116" y2="120" stroke="#2b2926" strokeWidth="2" strokeLinecap="round" />
@@ -154,9 +157,12 @@ export const StoryModal: React.FC<StoryModalProps> = ({
                   {/* Character standing and looking forward */}
                   <g transform="translate(110, 95) rotate(-6)">
                     <circle cx="0" cy="-22" r="5" fill="#faf7f0" stroke="#1e1c1a" strokeWidth="2" />
-                    <circle cx="2" cy="-23" r="1" fill="#1e1c1a" />
                     <line x1="0" y1="-17" x2="0" y2="-9" stroke="#1e1c1a" strokeWidth="2" strokeLinecap="round" />
-                    <path d="M -2 -15 Q -7 -13 -12 -15" stroke="#524a42" strokeWidth="1.5" fill="none" />
+                    {/* Scarf: Collar & Fluttering Tails */}
+                    <ellipse cx="0" cy="-16" rx="4.8" ry="2" fill="#c93434" stroke="#8b1e1e" strokeWidth="1" />
+                    <circle cx="-1.5" cy="-15.5" r="1.8" fill="#c93434" stroke="#8b1e1e" strokeWidth="1" />
+                    <path d="M -1.5 -15.5 Q -7 -17 -13 -14" stroke="#c93434" strokeWidth="2.4" fill="none" strokeLinecap="round" />
+                    <path d="M -1.5 -15 Q -6 -12 -10 -9" stroke="#c93434" strokeWidth="1.8" fill="none" strokeLinecap="round" />
                     <line x1="0" y1="-9" x2="-4" y2="0" stroke="#1e1c1a" strokeWidth="2" strokeLinecap="round" />
                     <line x1="0" y1="-9" x2="4" y2="0" stroke="#1e1c1a" strokeWidth="2" strokeLinecap="round" />
                   </g>
@@ -214,9 +220,11 @@ export const StoryModal: React.FC<StoryModalProps> = ({
               <g transform="translate(125, 85)">
                 <circle cx="0" cy="-22" r="5" fill="#faf7f0" stroke="#1e1c1a" strokeWidth="2" />
                 <circle cx="2" cy="-23" r="1" fill="#1e1c1a" />
-                <line x1="0" y1="-17" x2="0" y2="-5" stroke="#1e1c1a" strokeWidth="2" strokeLinecap="round" />
-                {/* Scarf draped peacefully */}
-                <path d="M -2 -14 Q -6 -12 -9 -14" stroke="#524a42" strokeWidth="1.5" fill="none" />
+                {/* Scarf: Cozy Draped Collar & Tails */}
+                <ellipse cx="0" cy="-16" rx="4.8" ry="2" fill="#c93434" stroke="#8b1e1e" strokeWidth="1" />
+                <circle cx="-1.5" cy="-15.5" r="1.8" fill="#c93434" stroke="#8b1e1e" strokeWidth="1" />
+                <path d="M -1.5 -15.5 Q -6 -14 -10 -11" stroke="#c93434" strokeWidth="2.4" fill="none" strokeLinecap="round" />
+                <path d="M -1.5 -15 Q -4 -11 -7 -7" stroke="#c93434" strokeWidth="1.8" fill="none" strokeLinecap="round" />
                 {/* Sitting dangling legs */}
                 <line x1="0" y1="-5" x2="6" y2="-5" stroke="#1e1c1a" strokeWidth="2" strokeLinecap="round" />
                 <line x1="6" y1="-5" x2="6" y2="9" stroke="#1e1c1a" strokeWidth="2" strokeLinecap="round" />

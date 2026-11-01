@@ -1,4 +1,5 @@
-import { PlayerState, Point, DrawnLine, Platform, ErasableItem, HazardSpike, PuzzleKey, PuzzleDoor, SpringDef, WindDraftDef, MovingPlatformDef, Particle, ToolType } from '../types/game';
+import { PlayerState, Point, DrawnLine, Platform, ErasableItem, HazardSpike, PuzzleKey, PuzzleDoor, SpringDef, WindDraftDef, MovingPlatformDef, Particle, ToolType, CharacterCustomization } from '../types/game';
+import { getScarfColor, getInkTone } from './customization';
 
 // Deterministic jitter for sketchy hand-drawn feel
 function jitter(val: number, amount: number = 1.2): number {
@@ -99,6 +100,7 @@ export function renderGameScene(
     reducedMotion: boolean;
     mousePos: Point | null;
     checkpoint?: Point;
+    customization?: CharacterCustomization;
   }
 ) {
   const time = performance.now() * 0.001;
@@ -434,80 +436,18 @@ export function renderGameScene(
     ctx.restore();
   }
 
-  // 13. Draw Player Character (Minimalist hand-sketched stick figure)
-  const p = state.player;
-  ctx.save();
-  ctx.translate(p.x + p.w / 2, p.y + p.h);
-
-  // Lean over when walking on slopes!
-  if (p.rotation) {
-    ctx.rotate(p.rotation);
-  }
-
-  // Squash & stretch scale
-  const scaleY = p.squash;
-  const scaleX = 1 / Math.sqrt(p.squash);
-  ctx.scale(p.isFacingLeft ? -scaleX : scaleX, scaleY);
-
-  ctx.strokeStyle = '#1e1c1a';
-  ctx.lineWidth = 2;
-  ctx.lineCap = 'round';
-
-  // Head
-  const headY = -22;
-  ctx.beginPath();
-  ctx.arc(0, headY, 5, 0, Math.PI * 2);
-  ctx.fillStyle = '#faf7f0';
-  ctx.fill();
-  ctx.stroke();
-
-  // Eye dot
-  ctx.fillStyle = '#1e1c1a';
-  ctx.beginPath();
-  ctx.arc(2, headY - 1, 1, 0, Math.PI * 2);
-  ctx.fill();
-
-  // Torso
-  ctx.beginPath();
-  ctx.moveTo(0, headY + 5);
-  ctx.lineTo(0, -9);
-  ctx.stroke();
-
-  // Headband / Scarf trailing in the wind
-  ctx.strokeStyle = 'rgba(60, 50, 45, 0.7)';
-  ctx.lineWidth = 1.5;
-  const scarfWave = Math.sin(time * 10) * 3;
-  ctx.beginPath();
-  ctx.moveTo(-2, headY + 2);
-  ctx.quadraticCurveTo(-7, headY + 4 + scarfWave, -12, headY + 2 - scarfWave);
-  ctx.stroke();
-
-  // Legs with running animation
-  ctx.strokeStyle = '#1e1c1a';
-  ctx.lineWidth = 2;
-  if (!p.isGrounded) {
-    // Airborne jump pose
-    ctx.beginPath();
-    ctx.moveTo(0, -9);
-    ctx.lineTo(-4, -4);
-    ctx.lineTo(-2, 0);
-    ctx.moveTo(0, -9);
-    ctx.lineTo(4, -5);
-    ctx.lineTo(5, 0);
-    ctx.stroke();
-  } else {
-    // Walking leg cycles
-    const leg1 = Math.sin(p.walkFrame) * 6;
-    const leg2 = -leg1;
-    ctx.beginPath();
-    ctx.moveTo(0, -9);
-    ctx.lineTo(leg1, 0);
-    ctx.moveTo(0, -9);
-    ctx.lineTo(leg2, 0);
-    ctx.stroke();
-  }
-
-  ctx.restore();
+  // 13. Draw Player Character
+  drawPlayerCharacter(ctx, {
+    x: state.player.x + state.player.w / 2,
+    y: state.player.y + state.player.h,
+    isFacingLeft: state.player.isFacingLeft,
+    isGrounded: state.player.isGrounded,
+    walkFrame: state.player.walkFrame,
+    squash: state.player.squash,
+    rotation: state.player.rotation,
+    time,
+    customization: state.customization
+  });
 
   // 14. Draw Tool Cursor (Pencil or Eraser tip near cursor)
   if (state.mousePos) {
@@ -539,3 +479,355 @@ export function renderGameScene(
     ctx.restore();
   }
 }
+
+export function drawPlayerCharacter(
+  ctx: CanvasRenderingContext2D,
+  options: {
+    x?: number;
+    y?: number;
+    scale?: number;
+    isFacingLeft?: boolean;
+    isGrounded?: boolean;
+    walkFrame?: number;
+    squash?: number;
+    rotation?: number;
+    time?: number;
+    customization?: CharacterCustomization;
+  }
+) {
+  const {
+    x = 0,
+    y = 0,
+    scale = 1,
+    isFacingLeft = false,
+    isGrounded = true,
+    walkFrame = 0,
+    squash = 1,
+    rotation = 0,
+    time = 0,
+    customization
+  } = options;
+
+  ctx.save();
+  ctx.translate(x, y);
+
+  if (rotation) {
+    ctx.rotate(rotation);
+  }
+
+  const scaleY = squash * scale;
+  const scaleX = (1 / Math.sqrt(squash)) * scale;
+  ctx.scale(isFacingLeft ? -scaleX : scaleX, scaleY);
+
+  const inkTone = getInkTone(customization?.inkTone);
+  const inkColor = inkTone.hex;
+
+  ctx.strokeStyle = inkColor;
+  ctx.lineWidth = 2;
+  ctx.lineCap = 'round';
+  ctx.lineJoin = 'round';
+
+  const headY = -22;
+
+  // 1. Torso stick
+  ctx.beginPath();
+  ctx.moveTo(0, headY + 5);
+  ctx.lineTo(0, -9);
+  ctx.stroke();
+
+  // 2. Legs
+  if (!isGrounded) {
+    // Airborne jump pose
+    ctx.beginPath();
+    ctx.moveTo(0, -9);
+    ctx.lineTo(-4, -4);
+    ctx.lineTo(-2, 0);
+    ctx.moveTo(0, -9);
+    ctx.lineTo(4, -5);
+    ctx.lineTo(5, 0);
+    ctx.stroke();
+  } else {
+    // Walking leg cycles or standing pose
+    const leg1 = Math.sin(walkFrame) * 6;
+    const leg2 = -leg1;
+    ctx.beginPath();
+    ctx.moveTo(0, -9);
+    ctx.lineTo(leg1, 0);
+    ctx.moveTo(0, -9);
+    ctx.lineTo(leg2, 0);
+    ctx.stroke();
+  }
+
+  // 3. Head (drawn over torso top)
+  ctx.beginPath();
+  ctx.arc(0, headY, 5.2, 0, Math.PI * 2);
+  ctx.fillStyle = inkTone.highlight;
+  ctx.fill();
+  ctx.stroke();
+
+  // 4. Expression / Eyes (facing right before scale flip)
+  const expr = customization?.expression || 'classic';
+  ctx.fillStyle = inkColor;
+  if (expr === 'cheerful') {
+    // Cute curved smiling eyes
+    ctx.beginPath();
+    ctx.arc(2, headY - 1, 1.8, Math.PI * 1.15, Math.PI * 1.85);
+    ctx.lineWidth = 1.3;
+    ctx.stroke();
+    ctx.lineWidth = 2;
+  } else if (expr === 'focused') {
+    // Determined eye + brow
+    ctx.beginPath();
+    ctx.arc(2, headY - 0.8, 1.1, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.beginPath();
+    ctx.moveTo(0.5, headY - 3);
+    ctx.lineTo(3.8, headY - 2.2);
+    ctx.lineWidth = 1.4;
+    ctx.stroke();
+    ctx.lineWidth = 2;
+  } else {
+    // Classic curious dot eye
+    ctx.beginPath();
+    ctx.arc(2, headY - 1, 1.15, 0, Math.PI * 2);
+    ctx.fill();
+  }
+
+  // 5. THE SCARF (Unmistakable Cozy Fabric Scarf - NOT a tongue!)
+  // Wrapped around the neck below the chin, with collar band, knot, and woven fabric tails
+  const scarfColorId = customization?.scarfColor ?? 'crimson';
+  if (scarfColorId !== 'none') {
+    const sc = getScarfColor(scarfColorId);
+    const style = customization?.scarfStyle || 'flutter';
+
+    ctx.save();
+
+    // Dainty lightweight collar band around neck
+    ctx.fillStyle = sc.fill;
+    ctx.strokeStyle = sc.border;
+    ctx.lineWidth = 1;
+
+    if (style === 'cozy') {
+      // Cute snug winter collar wrap (lightweight & snug)
+      ctx.beginPath();
+      ctx.ellipse(0, headY + 5.6, 4, 2, 0, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.stroke();
+
+      // Second snug loop
+      ctx.beginPath();
+      ctx.ellipse(-0.3, headY + 6.8, 3.4, 1.6, 0, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.stroke();
+
+      // Dainty folded tail resting neatly on chest
+      ctx.beginPath();
+      ctx.moveTo(-1, headY + 6.5);
+      ctx.lineTo(-2.8, headY + 9.5);
+      ctx.lineTo(-0.8, headY + 9.8);
+      ctx.lineTo(0.5, headY + 7);
+      ctx.closePath();
+      ctx.fill();
+      ctx.stroke();
+
+      // Cute tiny fringe threads
+      ctx.strokeStyle = sc.stripe;
+      ctx.lineWidth = 0.8;
+      ctx.beginPath();
+      ctx.moveTo(-2.4, headY + 9.6);
+      ctx.lineTo(-2.6, headY + 11);
+      ctx.moveTo(-1.2, headY + 9.8);
+      ctx.lineTo(-1.2, headY + 11.2);
+      ctx.stroke();
+    } else if (style === 'neckerchief') {
+      // Petite triangular bandana
+      ctx.beginPath();
+      ctx.ellipse(0, headY + 5.5, 3.6, 1.8, 0, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.stroke();
+
+      // Bandana triangle
+      ctx.beginPath();
+      ctx.moveTo(-3, headY + 5.8);
+      ctx.lineTo(0, headY + 9.8);
+      ctx.lineTo(2.5, headY + 5.8);
+      ctx.closePath();
+      ctx.fill();
+      ctx.stroke();
+
+      // Small knot
+      ctx.beginPath();
+      ctx.arc(-1, headY + 5.8, 1.3, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.stroke();
+
+      // Perky little tied bunny ears at back
+      const wKnot = Math.sin(time * 9) * 1.2;
+      ctx.strokeStyle = sc.fill;
+      ctx.lineWidth = 1.5;
+      ctx.beginPath();
+      ctx.moveTo(-1.2, headY + 5.8);
+      ctx.quadraticCurveTo(-4, headY + 4.5 + wKnot, -6.5, headY + 6 + wKnot);
+      ctx.stroke();
+    } else {
+      // 'flutter' - Dainty Adventurer Ribbon (cute, airy, floating in the breeze!)
+      // 1. Soft snug neck collar
+      ctx.beginPath();
+      ctx.ellipse(0, headY + 5.6, 3.8, 1.8, -0.05, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.stroke();
+
+      // 2. Cute tiny knot
+      ctx.beginPath();
+      ctx.arc(-1.2, headY + 5.8, 1.4, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.stroke();
+
+      // 3. Slender floating ribbon tails
+      const wave1 = Math.sin(time * 8.5) * 2;
+      const wave2 = Math.cos(time * 8.5 + 1.2) * 1.8;
+
+      // Upper ribbon tail (dainty & bouncy)
+      ctx.strokeStyle = sc.fill;
+      ctx.lineWidth = 1.9;
+      ctx.lineCap = 'round';
+      ctx.beginPath();
+      ctx.moveTo(-1.2, headY + 5.8);
+      ctx.bezierCurveTo(
+        -4.5, headY + 4.8 + wave1,
+        -7.5, headY + 6 + wave1 * 0.6,
+        -11, headY + 4.8 - wave1
+      );
+      ctx.stroke();
+
+      // Tiny cute fringe threads at ribbon tip
+      const tipX = -11;
+      const tipY = headY + 4.8 - wave1;
+      ctx.strokeStyle = sc.stripe;
+      ctx.lineWidth = 0.8;
+      ctx.beginPath();
+      ctx.moveTo(tipX, tipY - 0.7);
+      ctx.lineTo(tipX - 1.8, tipY - 1.2);
+      ctx.moveTo(tipX, tipY + 0.7);
+      ctx.lineTo(tipX - 1.8, tipY + 1.2);
+      ctx.stroke();
+
+      // Under ribbon tail (slender & shorter)
+      ctx.strokeStyle = sc.fill;
+      ctx.lineWidth = 1.5;
+      ctx.beginPath();
+      ctx.moveTo(-1.2, headY + 6.3);
+      ctx.quadraticCurveTo(
+        -4.5, headY + 7.8 + wave2,
+        -7.8, headY + 9 + wave2
+      );
+      ctx.stroke();
+    }
+
+    ctx.restore();
+  }
+
+  // 6. HATS / HEADWEAR
+  const hatId = customization?.hat || 'none';
+  if (hatId !== 'none') {
+    ctx.save();
+    if (hatId === 'beret') {
+      // Artist felt beret
+      ctx.fillStyle = '#2b2926';
+      ctx.strokeStyle = inkColor;
+      ctx.lineWidth = 1.3;
+
+      // Soft tilted beret dome
+      ctx.beginPath();
+      ctx.ellipse(-0.5, headY - 4.5, 7.5, 3.2, -0.18, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.stroke();
+
+      // Beret stalk / antenna
+      ctx.beginPath();
+      ctx.moveTo(-1, headY - 7.5);
+      ctx.lineTo(-1.5, headY - 10);
+      ctx.lineWidth = 1.5;
+      ctx.stroke();
+    } else if (hatId === 'beanie') {
+      // Warm knit beanie
+      ctx.fillStyle = '#b94040';
+      ctx.strokeStyle = inkColor;
+      ctx.lineWidth = 1.3;
+
+      // Folded beanie dome
+      ctx.beginPath();
+      ctx.arc(0, headY - 1, 5.8, Math.PI, 0);
+      ctx.lineTo(5.8, headY - 3.5);
+      ctx.quadraticCurveTo(0, headY - 10, -5.8, headY - 3.5);
+      ctx.closePath();
+      ctx.fill();
+      ctx.stroke();
+
+      // Ribbed cuff
+      ctx.fillStyle = '#8f2323';
+      ctx.beginPath();
+      ctx.rect(-6, headY - 4.5, 12, 3);
+      ctx.fill();
+      ctx.stroke();
+
+      // Fluffy round pom-pom on top
+      ctx.fillStyle = '#faf7f0';
+      ctx.beginPath();
+      ctx.arc(0, headY - 10, 2.5, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.stroke();
+    } else if (hatId === 'crown') {
+      // Origami paper crown
+      ctx.fillStyle = '#f6d365';
+      ctx.strokeStyle = inkColor;
+      ctx.lineWidth = 1.3;
+      ctx.beginPath();
+      ctx.moveTo(-5.5, headY - 4);
+      ctx.lineTo(-5.5, headY - 9);
+      ctx.lineTo(-2.5, headY - 6.5);
+      ctx.lineTo(0, headY - 10.5); // center peak
+      ctx.lineTo(2.5, headY - 6.5);
+      ctx.lineTo(5.5, headY - 9);
+      ctx.lineTo(5.5, headY - 4);
+      ctx.closePath();
+      ctx.fill();
+      ctx.stroke();
+
+      // Tiny ruby jewel in center
+      ctx.fillStyle = '#c93434';
+      ctx.beginPath();
+      ctx.arc(0, headY - 6, 1.2, 0, Math.PI * 2);
+      ctx.fill();
+    } else if (hatId === 'feather') {
+      // Explorer quill feather
+      ctx.strokeStyle = '#2b5282';
+      ctx.fillStyle = '#93c5fd';
+      ctx.lineWidth = 1.2;
+
+      ctx.save();
+      ctx.translate(-3, headY - 2);
+      ctx.rotate(-0.55);
+
+      // Feather blade
+      ctx.beginPath();
+      ctx.moveTo(0, 0);
+      ctx.quadraticCurveTo(-3, -7, 0, -14);
+      ctx.quadraticCurveTo(3, -7, 0, 0);
+      ctx.fill();
+      ctx.stroke();
+
+      // Feather shaft / quill
+      ctx.strokeStyle = '#1e3a5f';
+      ctx.beginPath();
+      ctx.moveTo(0, 1.5);
+      ctx.lineTo(0, -14);
+      ctx.stroke();
+      ctx.restore();
+    }
+    ctx.restore();
+  }
+
+  ctx.restore();
+}
+

@@ -147,6 +147,14 @@ export interface LevelRecord {
   masteryInk?: boolean;
 }
 
+export interface CharacterCustomization {
+  scarfColor?: string;
+  scarfStyle?: string;
+  hat?: string;
+  inkTone?: string;
+  expression?: string;
+}
+
 export interface UserProgress {
   currentLevel: number;
   completedLevels: Record<number, LevelRecord>;
@@ -158,4 +166,6 @@ export interface UserProgress {
   reducedMotion: boolean;
   characterName: string;
   hasSeenPrologue: boolean;
+  customization?: CharacterCustomization;
 }
+
