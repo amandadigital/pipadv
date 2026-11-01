@@ -815,7 +815,7 @@ const ch8: LevelData[] = [
     hint: "Chain the three springs with pure timing. No pencil or eraser needed.",
     pencilDisabled: true
   }),
-  createLevel(80, "Vortex & Wire", 8, CHAPTER_NAMES[7], "chapter culmination", [70, 400], [720, 120], 50, 2, [
+  createLevel(80, "Vortex & Wire", 8, CHAPTER_NAMES[7], "chapter culmination", [70, 400], [720, 120], 0, 0, [
     [40, 440, 140, 20],
     [640, 160, 120, 20]
   ], {
@@ -823,7 +823,8 @@ const ch8: LevelData[] = [
     springs: [[220, 430, 40, 10, 1.4]],
     winds: [[340, 100, 120, 340, 0.35, -0.4]],
     spikes: [[160, 465, 460, 15]],
-    hint: "Spring up, ride the wind, erase the bar, and glide to the exit."
+    hint: "Spring up, ride the wind, erase the bar, and glide to the exit.",
+    pencilDisabled: true
   })
 ];
 
@@ -858,7 +859,7 @@ const ch9: LevelData[] = [
     ],
     hint: "Erase the tower wall. Use minimal graphite dashes to ascend."
   }),
-  createLevel(83, "Pendulum & Trap", 9, CHAPTER_NAMES[8], "synchronized motion", [70, 400], [720, 400], 0, 2, [
+  createLevel(83, "Pendulum & Trap", 9, CHAPTER_NAMES[8], "synchronized motion", [70, 400], [720, 400], 0, 0, [
     [40, 440, 120, 20],
     [640, 440, 120, 20]
   ], {
